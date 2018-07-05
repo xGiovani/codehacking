@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UsersRequest;
 use App\User;
 use App\Role;
+use App\Photo;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -41,10 +42,16 @@ class UsersController extends Controller
      */
     public function store(UsersRequest $request)
     {
-        //return $request->all();
+        $input = $request->all();
+        $input['password'] = bcrypt($request->password);
 //        $password = Hash::make($request->input('password'));
-//        return $password;
-        User::create($request->all());
+        if($file =  $request->file('photo_id')) {
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['file'=>$name]);
+            $input['photo_id'] = $photo->id;
+        }
+        User::create($input);
         return redirect('/users');
     }
 
