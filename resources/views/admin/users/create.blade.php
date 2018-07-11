@@ -36,7 +36,7 @@
             <label>Upload File</label>
             <input type="file" class="form-control-file" name="photo_id">
         </div>
-        <button type="submit" class="btn btn-primary">Create Post</button>
+        <button type="submit" class="btn btn-primary">Create User</button>
         @csrf
         {{--{{csrf_field()}}--}}
     </form>
