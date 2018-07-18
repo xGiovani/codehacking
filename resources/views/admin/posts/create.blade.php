@@ -10,7 +10,10 @@
         <div class="form-group">
             <label>Category:</label>
             <select class="form-control" name="category_id">
-                <option value="1">PHP</option>
+                {{--<option value="1">PHP</option>--}}
+                @foreach($categories as $category)
+                    <option value='{{$category->id}}'>{{$category->name}}</option>
+                @endforeach
             </select>
         </div>
         <div class="form-group">
