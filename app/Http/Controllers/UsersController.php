@@ -8,7 +8,8 @@ use App\Http\Requests\UsersRequest;
 use App\User;
 use App\Role;
 use App\Photo;
-use Illuminate\Support\Facades\Hash;
+//use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
 {
@@ -53,6 +54,7 @@ class UsersController extends Controller
             $input['photo_id'] = $photo->id;
         }
         User::create($input);
+        Session::flash('created_user', 'The user was created');
         return redirect('/users');
     }
 
@@ -105,6 +107,7 @@ class UsersController extends Controller
             $input['photo_id'] = $photo->$id;
         }
         $user->update($input);
+        Session::flash('updated_user', 'The user was updated');
         return redirect('/users');
     }
 
@@ -116,6 +119,11 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+//        User::findOrFail($id)->delete();
+        $user = User::findOrFail($id);
+        unlink(public_path() . $user->photo->file);
+        $user->delete();
+        Session::flash('deleted_user', 'The user was deleted');
+        return redirect('/users');
     }
 }

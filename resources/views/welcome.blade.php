@@ -65,6 +65,9 @@
         </style>
     </head>
     <body>
+    @if(Session::has('status'))
+        <p class="bg-danger">{{session('status')}}</p>
+    @endif
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">

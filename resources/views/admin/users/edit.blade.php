@@ -53,10 +53,18 @@
                 <input type="file" class="form-control-file" name="photo_id">
             </div>
             <button type="submit" class="btn btn-primary">Edit User</button>
+                {{--{{csrf_field()}}--}}
             @csrf
-            {{--{{csrf_field()}}--}}
+        </form>
+        <br>
+            {{--Delete Form--}}
+        <form method="POST" action="/users/{{$user->id}}">
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">Delete User</button>
+            @csrf
         </form>
     </div>
+
     @include('includes.form_error')
 
 @stop
